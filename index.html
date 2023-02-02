@@ -19,7 +19,7 @@
         //   //이게더 좋은 방법임!!!
         // };
         const [amount, setAmount] = React.useState(0);
-        const [inverted, setInverted] = React.useState(false)
+        const [inverted, setInverted] = React.useState(false);
         const onChange = (event) => {
             setAmount(event.target.value)
         }
@@ -56,19 +56,43 @@
             </div>)
     }
     function KmToMiles() {
+        const [amount, setAmount] = React.useState(0);
+        const [inverted, setInverted] = React.useState(false);
+        const onChange = (event) => {
+            setAmount(event.target.value)
+        }
+        const reset = () => setAmount(0);
+        const onInvert = () => {
+            reset();
+            setInverted((current) => !current)
+        };
         return (
             <div>
-                <h3>KM 2 M</h3>
+                <div>
+                    <label htmlFor="miles">Miles</label>
+                    <input
+                        value={inverted ? Math.round(amount / 0.621371) : amount}
+                        id="miles"
+                        placeholder="miles"
+                        type="number"
+                        onChange={onChange}
+                        disabled={inverted}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="km">KM</label>
+                    <input
+                        value={inverted ? amount : Math.round(amount * 0.621371)}
+                        id="km"
+                        placeholder="km"
+                        type="number"
+                        disabled={!inverted}
+                        onChange={onChange} />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onInvert}>{inverted ? "Turn back" : "Invert"}</button>
             </div>)
     };
-    function selectUnits() {
-        return (
-            <div>
-                <p>
-                    이건 되나...?</p>
-            </div>
-        )
-    }
     function App() {
         const [index, setIndex] = React.useState("0")
         const onSelect = (event) => {
